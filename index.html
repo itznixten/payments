@@ -22,16 +22,17 @@
     <div class="container">
       <h2>Payment</h2>
       <p>This is how it would look on a mobile device.</p>
-      <input type="checkbox" id="mycheckbox">
-      <label for="mycheckbox">If subcribed to the plan then continue or <br>please selected an option to pay </label><br>
-      <input type="radio"  id="Paypal" name="payment">
-      <label for="Paypal">Pay by Paypal</label><br>
-      <input type="radio" id="Visa" name="payment">
-      <label for="Visa">Pay by Visa</label><br>
-      <input type="radio" id="Master" name="payment">
-      <label for="Master">Pay by Master card</label><br><br>
-
-      <button type="submit" id="Mysubmit">submit</button>
+      <form id="paymentForm">
+        <input type="checkbox" id="mycheckbox">
+        <label for="mycheckbox">If subcribed to the plan then continue or <br>please selected an option to pay </label><br>
+        <input type="radio"  id="Paypal" name="payment">
+        <label for="Paypal">Pay by Paypal</label><br>
+        <input type="radio" id="Visa" name="payment">
+        <label for="Visa">Pay by Visa</label><br>
+        <input type="radio" id="Master" name="payment">
+        <label for="Master">Pay by Master card</label><br><br>
+        <button type="submit" id="Mysubmit">submit</button>
+      </form>
       <p id="sumresult"></p>
       <p id="paymentResult"></p>
     </div>
