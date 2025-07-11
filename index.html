@@ -20,21 +20,43 @@
       <div class="iphone-notch"></div>
     </div>
     <div class="container">
-      <h2>Payment</h2>
-      <p>This is how it would look on a mobile device.</p>
-      <form id="paymentForm">
-        <input type="checkbox" id="mycheckbox">
-        <label for="mycheckbox">If subcribed to the plan then continue or <br>please selected an option to pay </label><br>
-        <input type="radio"  id="Paypal" name="payment">
-        <label for="Paypal">Pay by Paypal</label><br>
-        <input type="radio" id="Visa" name="payment">
-        <label for="Visa">Pay by Visa</label><br>
-        <input type="radio" id="Master" name="payment">
-        <label for="Master">Pay by Master card</label><br><br>
-        <button type="submit" id="Mysubmit">submit</button>
+      <div style="display:flex; justify-content:center; gap:12px; margin-bottom:18px;">
+        <button id="showSignIn" type="button" style="background:#4f8cff;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-weight:600;">Sign In</button>
+        <button id="showRegister" type="button" style="background:#6ad1ff;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-weight:600;">Register</button>
+      </div>
+      <form id="registerForm" style="margin-bottom:24px; display:none;">
+        <input type="text" id="regUsername" placeholder="Username or Email" required style="width:90%;margin-bottom:10px;padding:8px;border-radius:8px;border:1px solid #ccc;">
+        <input type="password" id="regPassword" placeholder="Password" required style="width:90%;margin-bottom:10px;padding:8px;border-radius:8px;border:1px solid #ccc;">
+        <button type="submit" style="width:100%;background:#6ad1ff;color:#fff;border:none;border-radius:8px;padding:10px 0;font-weight:600;">Register</button>
       </form>
-      <p id="sumresult"></p>
-      <p id="paymentResult"></p>
+      <form id="loginForm" style="margin-bottom:24px; display:block;">
+        <input type="text" id="username" placeholder="Username or Email" required style="width:90%;margin-bottom:10px;padding:8px;border-radius:8px;border:1px solid #ccc;">
+        <input type="password" id="password" placeholder="Password" required style="width:90%;margin-bottom:10px;padding:8px;border-radius:8px;border:1px solid #ccc;">
+        <button type="submit" style="width:100%;background:#4f8cff;color:#fff;border:none;border-radius:8px;padding:10px 0;font-weight:600;">Sign In</button>
+      </form>
+      <div id="mainApp" style="display:none;">
+        <h2>Payment</h2>
+        <p>This is how it would look on a mobile device.</p>
+        <form id="paymentForm">
+          <input type="checkbox" id="mycheckbox">
+          <label for="mycheckbox">If subcribed to the plan then continue or <br>please selected an option to pay </label><br>
+          <input type="radio"  id="Paypal" name="payment">
+          <label for="Paypal">Pay by Paypal</label><br>
+          <input type="radio" id="Visa" name="payment">
+          <label for="Visa">Pay by Visa</label><br>
+          <input type="radio" id="Master" name="payment">
+          <label for="Master">Pay by Master card</label><br><br>
+          <button type="submit" id="Mysubmit">submit</button>
+        </form>
+        <p id="sumresult"></p>
+        <p id="paymentResult"></p>
+        <div id="userProfile" style="display:none; margin-top:24px; text-align:center;">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" style="width:80px; height:80px; border-radius:50%; margin-bottom:12px;">
+          <h3 style="margin:0; color:#4f8cff;">John Doe</h3>
+          <p style="margin:4px 0 0 0; color:#444;">johndoe@email.com</p>
+          <p style="margin:8px 0 0 0; color:#222; font-weight:500;">Status: Subscribed</p>
+        </div>
+      </div>
     </div>
   </div>
   <script src="index.js"></script> 
