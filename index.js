@@ -1,14 +1,85 @@
+// --- Registration logic ---
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+  registerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const regUsername = document.getElementById('regUsername').value;
+    const regPassword = document.getElementById('regPassword').value;
+    if (regUsername && regPassword) {
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      if (users.find(u => u.username === regUsername)) {
+        alert('Username already exists!');
+        return;
+      }
+      users.push({ username: regUsername, password: regPassword });
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Registration successful! You can now sign in.');
+      registerForm.reset();
+      document.getElementById('showSignIn').click();
+    } else {
+      alert('Please enter username and password');
+    }
+  });
+}
+
+// --- Login/sign-in logic ---
+const loginForm = document.getElementById('loginForm');
+const mainApp = document.getElementById('mainApp');
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+  const user = users.find(u => u.username === username && u.password === password);
+  if (user) {
+    localStorage.setItem('user', JSON.stringify(user));
+    loginForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = 'none';
+    mainApp.style.display = 'block';
+    document.getElementById('showSignIn').style.display = 'none';
+    document.getElementById('showRegister').style.display = 'none';
+    updateUserProfile();
+  } else {
+    alert('Invalid username or password');
+  }
+});
+
+function updateUserProfile() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user) {
+    document.querySelector('#userProfile h3').textContent = user.username;
+    document.querySelector('#userProfile p').textContent = user.username + '@email.com';
+  }
+}
+
+// Toggle between Sign In and Register forms
+const showSignIn = document.getElementById('showSignIn');
+const showRegister = document.getElementById('showRegister');
+const loginFormEl = document.getElementById('loginForm');
+const registerFormEl = document.getElementById('registerForm');
+
+showSignIn.addEventListener('click', function() {
+  loginFormEl.style.display = 'block';
+  registerFormEl.style.display = 'none';
+});
+showRegister.addEventListener('click', function() {
+  loginFormEl.style.display = 'none';
+  registerFormEl.style.display = 'block';
+});
+
+// Payment/profile logic (unchanged)
 const checkbox = document.getElementById('mycheckbox');
 const paypal = document.getElementById('Paypal');
 const visa = document.getElementById('Visa');
 const master = document.getElementById('Master');
 const paymentResult = document.getElementById('paymentResult');
-
 const form = document.getElementById('paymentForm');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   if (checkbox.checked) {
     paymentResult.textContent = 'Subscription active. You may continue.';
+    document.getElementById('userProfile').style.display = 'block';
+    updateUserProfile();
     return;
   }
   const selectedPayments = [paypal.checked, visa.checked, master.checked].filter(Boolean);
