@@ -2,11 +2,9 @@ const checkbox = document.getElementById('mycheckbox');
 const paypal = document.getElementById('Paypal');
 const visa = document.getElementById('Visa');
 const master = document.getElementById('Master');
-const submitBtn = document.getElementById('Mysubmit');
 const paymentResult = document.getElementById('paymentResult');
 
-// Wrap payment options in a form for accessibility
-const form = document.querySelector('.container');
+const form = document.getElementById('paymentForm');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   if (checkbox.checked) {
