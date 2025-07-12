@@ -1,12 +1,29 @@
 import flask
 from flask import Flask, render_template_string, request, redirect, url_for, session, flash
 import datetime
+import json
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# In-memory user database (for demo only)
-users = []
+# Persistent user database using a local file
+USER_DB_FILE = 'users.json'
+
+def load_users():
+    if os.path.exists(USER_DB_FILE):
+        with open(USER_DB_FILE, 'r') as f:
+            try:
+                return json.load(f)
+            except Exception:
+                return []
+    return []
+
+def save_users(users):
+    with open(USER_DB_FILE, 'w') as f:
+        json.dump(users, f)
+
+users = load_users()
 
 # HTML template (can be split into separate files for production)
 template = '''
@@ -176,16 +193,18 @@ def createdbynixon():
 def register():
     regEmail = request.form['regEmail'].strip()
     regPassword = request.form['regPassword'].strip()
-    allowed_domains = ['@gmail', '@yahoo', '@hotmail']
+    allowed_domains = ['@gmail.com', '@yahoo.com', '@hotmail.com']
+    users = load_users()
     if not regEmail or not regPassword:
         flash('Please enter email and password')
-    elif not any(regEmail.startswith(domain) for domain in allowed_domains):
-        flash('Email must start with @gmail, @yahoo, or @hotmail')
+    elif not any(regEmail.lower().endswith(domain) for domain in allowed_domains):
+        flash('Email must end with @gmail.com, @yahoo.com, or @hotmail.com')
     elif any(u['email'] == regEmail for u in users):
         flash('Email already exists!')
     else:
         users.append({'email': regEmail, 'password': regPassword})
-        flash('Registration successful! You can now sign in.')
+        save_users(users)
+        flash('You have been registered.')
     return redirect(url_for('home', show='login'))
 
 # --- Login ---
@@ -193,9 +212,10 @@ def register():
 def login():
     email = request.form['email'].strip()
     password = request.form['password'].strip()
-    allowed_domains = ['@gmail', '@yahoo', '@hotmail']
-    if not any(email.startswith(domain) for domain in allowed_domains):
-        flash('Email must start with @gmail, @yahoo, or @hotmail')
+    allowed_domains = ['@gmail.com', '@yahoo.com', '@hotmail.com']
+    users = load_users()
+    if not any(email.lower().endswith(domain) for domain in allowed_domains):
+        flash('Email must end with @gmail.com, @yahoo.com, or @hotmail.com')
         return redirect(url_for('home', show='login'))
     user = next((u for u in users if u['email'] == email and u['password'] == password), None)
     if user:
