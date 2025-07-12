@@ -29,6 +29,7 @@ template = '''
             box-shadow: 0 4px 24px rgba(0,0,0,0.2);
             padding: 32px 24px 24px 24px;
             color: #fff;
+            border: 6px solid #e53935;
         }
         .status-bar {
             background: #e53935;
@@ -138,13 +139,37 @@ template = '''
 </html>
 '''
 
-# --- Home Page ---
+ # --- Home Page ---
 @app.route('/', methods=['GET'])
 def home():
     now = datetime.datetime.now()
     time = now.strftime('%I:%M %p')
     date = now.strftime('%b %d, %Y')
     return render_template_string(template, time=time, date=date)
+
+# --- Created by Nixon Page ---
+@app.route('/createdbynixon', methods=['GET'])
+def createdbynixon():
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Created by Nixon</title>
+        <style>
+            body { background: #000; color: #e53935; font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+            .center { text-align: center; }
+            h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+            p { font-size: 1.3em; }
+        </style>
+    </head>
+    <body>
+        <div class="center">
+            <h1>Created by Nixon</h1>
+            <p>Thank you for signing in!</p>
+        </div>
+    </body>
+    </html>
+    '''
 
 # --- Registration ---
 @app.route('/register', methods=['POST'])
@@ -175,7 +200,7 @@ def login():
     user = next((u for u in users if u['email'] == email and u['password'] == password), None)
     if user:
         session['user'] = email
-        return redirect(url_for('home'))
+        return redirect(url_for('createdbynixon'))
     else:
         flash('Invalid email or password')
         return redirect(url_for('home', show='login'))
